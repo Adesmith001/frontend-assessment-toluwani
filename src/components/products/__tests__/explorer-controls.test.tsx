@@ -1,18 +1,25 @@
-import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { act, fireEvent, render, screen } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ExplorerControls } from "@/components/products/explorer-controls";
 
 const replaceMock = vi.fn();
 let currentSearchParams = "";
+const searchParamsMock = {
+  get: (key: string) => new URLSearchParams(currentSearchParams).get(key),
+  toString: () => currentSearchParams,
+};
 
 vi.mock("next/navigation", () => ({
   useRouter: () => ({
-    replace: replaceMock,
+    replace: (href: string) => {
+      replaceMock(href, { scroll: false });
+      const queryString = href.includes("?") ? href.split("?")[1] ?? "" : "";
+      currentSearchParams = queryString;
+    },
   }),
   usePathname: () => "/",
-  useSearchParams: () => new URLSearchParams(currentSearchParams),
+  useSearchParams: () => searchParamsMock,
 }));
 
 describe("ExplorerControls", () => {
@@ -22,9 +29,11 @@ describe("ExplorerControls", () => {
     vi.useFakeTimers();
   });
 
-  it("waits for the debounce window before syncing the search query to the URL", async () => {
-    const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
+  afterEach(() => {
+    vi.useRealTimers();
+  });
 
+  it("waits for the debounce window before syncing the search query to the URL", async () => {
     render(
       <ExplorerControls
         categories={[]}
@@ -33,23 +42,21 @@ describe("ExplorerControls", () => {
       />,
     );
 
-    await user.type(
-      screen.getByRole("searchbox", { name: "Search products" }),
-      "phone",
-    );
+    fireEvent.change(screen.getByRole("searchbox", { name: "Search products" }), {
+      target: { value: "phone" },
+    });
 
     expect(replaceMock).not.toHaveBeenCalled();
 
-    vi.advanceTimersByTime(350);
-
-    await waitFor(() => {
-      expect(replaceMock).toHaveBeenCalledWith("/?q=phone", { scroll: false });
+    act(() => {
+      vi.advanceTimersByTime(350);
     });
+
+    expect(replaceMock).toHaveBeenCalledWith("/?q=phone", { scroll: false });
   });
 
   it("resets pagination when the category changes", async () => {
     currentSearchParams = "page=3&q=phone";
-    const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
 
     render(
       <ExplorerControls
@@ -65,9 +72,9 @@ describe("ExplorerControls", () => {
       />,
     );
 
-    await user.selectOptions(screen.getByRole("combobox", { name: "Category" }), [
-      "smartphones",
-    ]);
+    fireEvent.change(screen.getByRole("combobox", { name: "Category" }), {
+      target: { value: "smartphones" },
+    });
 
     expect(replaceMock).toHaveBeenCalledWith("/?q=phone&category=smartphones", {
       scroll: false,

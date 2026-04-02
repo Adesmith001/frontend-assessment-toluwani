@@ -1,21 +1,24 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, Sora } from "next/font/google";
+import localFont from "next/font/local";
 import Link from "next/link";
 import "./globals.css";
 
-const sora = Sora({
+const sora = localFont({
+  src: "./fonts/bahnschrift.ttf",
   variable: "--font-sora",
-  subsets: ["latin"],
+  display: "swap",
 });
 
-const ibmPlexMono = IBM_Plex_Mono({
+const ibmPlexMono = localFont({
+  src: "./fonts/CascadiaMono.ttf",
   variable: "--font-ibm-plex-mono",
-  subsets: ["latin"],
-  weight: ["400", "500"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://checkit-content-explorer.example"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://checkit-content-explorer.example",
+  ),
   title: {
     default: "Checkit Content Explorer",
     template: "%s | Checkit Content Explorer",

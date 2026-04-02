@@ -70,7 +70,7 @@ export default async function ProductDetailPage({
       <section className="grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)]">
         <div className="space-y-4">
           <div className="surface-panel-strong relative overflow-hidden rounded-[36px] p-4">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-[28px] bg-[linear-gradient(135deg,_rgba(49,94,255,0.08),_rgba(255,255,255,0.68))]">
+            <div className="relative aspect-4/3 overflow-hidden rounded-[28px] bg-[linear-gradient(135deg,rgba(49,94,255,0.08),rgba(255,255,255,0.68))]">
               <ProductImage
                 src={product.thumbnail}
                 alt={product.title}
@@ -86,9 +86,9 @@ export default async function ProductDetailPage({
               {gallery.slice(0, 3).map((image, index) => (
                 <div
                   key={`${image}-${index}`}
-                  className="surface-panel-strong relative overflow-hidden rounded-[24px] p-3"
+                  className="surface-panel-strong relative overflow-hidden rounded-3xl p-3"
                 >
-                  <div className="relative aspect-square overflow-hidden rounded-[18px] bg-[linear-gradient(135deg,_rgba(49,94,255,0.06),_rgba(255,255,255,0.7))]">
+                  <div className="relative aspect-square overflow-hidden rounded-[18px] bg-[linear-gradient(135deg,rgba(49,94,255,0.06),rgba(255,255,255,0.7))]">
                     <ProductImage
                       src={image}
                       alt={`${product.title} preview ${index + 1}`}
@@ -122,13 +122,13 @@ export default async function ProductDetailPage({
           </p>
 
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
-            <div className="rounded-[24px] border border-border bg-background/70 p-5">
+            <div className="rounded-3xl border border-border bg-background/70 p-5">
               <p className="text-sm text-muted-foreground">Price</p>
               <p className="mt-2 text-3xl font-semibold tracking-tight text-foreground">
                 {formatCurrency(product.price)}
               </p>
             </div>
-            <div className="rounded-[24px] border border-border bg-background/70 p-5">
+            <div className="rounded-3xl border border-border bg-background/70 p-5">
               <p className="text-sm text-muted-foreground">Rating</p>
               <p className="mt-2 text-3xl font-semibold tracking-tight text-foreground">
                 {formatRating(product.rating)}
@@ -137,17 +137,17 @@ export default async function ProductDetailPage({
           </div>
 
           <dl className="mt-8 grid gap-4 sm:grid-cols-2">
-            <div className="rounded-[24px] border border-border bg-background/70 p-5">
+            <div className="rounded-3xl border border-border bg-background/70 p-5">
               <dt className="text-sm text-muted-foreground">Stock</dt>
               <dd className="mt-2 text-lg font-semibold text-foreground">{product.stock}</dd>
             </div>
-            <div className="rounded-[24px] border border-border bg-background/70 p-5">
+            <div className="rounded-3xl border border-border bg-background/70 p-5">
               <dt className="text-sm text-muted-foreground">Availability</dt>
               <dd className="mt-2 text-lg font-semibold text-foreground">
                 {product.availabilityStatus ?? "In catalog"}
               </dd>
             </div>
-            <div className="rounded-[24px] border border-border bg-background/70 p-5">
+            <div className="rounded-3xl border border-border bg-background/70 p-5">
               <dt className="text-sm text-muted-foreground">Discount</dt>
               <dd className="mt-2 text-lg font-semibold text-foreground">
                 {product.discountPercentage
@@ -155,7 +155,7 @@ export default async function ProductDetailPage({
                   : "No active discount"}
               </dd>
             </div>
-            <div className="rounded-[24px] border border-border bg-background/70 p-5">
+            <div className="rounded-3xl border border-border bg-background/70 p-5">
               <dt className="text-sm text-muted-foreground">Category</dt>
               <dd className="mt-2 text-lg font-semibold text-foreground">
                 {formatCategoryLabel(product.category)}
