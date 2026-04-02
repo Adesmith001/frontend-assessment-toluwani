@@ -166,7 +166,7 @@ export default async function ProductDetailPage({
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               href="/"
-              className="rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-foreground transition hover:opacity-90"
+              className="rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90"
             >
               Back to catalog
             </Link>

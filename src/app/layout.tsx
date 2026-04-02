@@ -39,6 +39,9 @@ export default function RootLayout({
     >
       <body className="min-h-full bg-background text-foreground antialiased">
         <div className="relative min-h-screen overflow-x-hidden">
+          <a href="#content" className="skip-link">
+            Skip to content
+          </a>
           <div className="pointer-events-none absolute inset-x-0 top-0 h-80 bg-[radial-gradient(circle_at_top,_rgba(51,102,255,0.18),_transparent_55%)]" />
           <header className="sticky top-0 z-40 border-b border-border/80 bg-background/88 backdrop-blur-xl">
             <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-6 px-4 py-4 sm:px-6 lg:px-8">
@@ -62,7 +65,9 @@ export default function RootLayout({
             </div>
           </header>
 
-          <main className="relative z-10 flex-1">{children}</main>
+          <main id="content" className="relative z-10 flex-1">
+            {children}
+          </main>
         </div>
       </body>
     </html>

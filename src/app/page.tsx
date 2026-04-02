@@ -50,7 +50,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           </p>
         </div>
 
-        <div className="surface-panel-strong rounded-[32px] p-6">
+        <div className="surface-panel-strong rounded-4xl p-6">
           <p className="eyebrow text-muted-foreground">Current view</p>
           <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
@@ -61,7 +61,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                 {query.category
                   ? `Focused on ${formatCategoryLabel(query.category)}`
                   : "All product categories"}
-                {query.q ? ` matching “${query.q}”` : ""}
+                {query.q ? ` matching "${query.q}"` : ""}
               </p>
             </div>
             <p className="font-mono text-xs uppercase tracking-[0.24em] text-muted-foreground">

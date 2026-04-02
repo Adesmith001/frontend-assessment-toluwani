@@ -22,13 +22,13 @@ export function EmptyState({ q, category }: EmptyStateProps) {
       <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
         <Link
           href={createCatalogHref({})}
-          className="rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-foreground transition hover:opacity-90"
+          className="rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90"
         >
           Clear filters
         </Link>
         {(q || category) && (
           <p className="text-sm text-muted-foreground">
-            Current filters: {q ? `“${q}”` : "all terms"}
+            Current filters: {q ? `"${q}"` : "all terms"}
             {q && category ? " in " : ""}
             {category ? category.replaceAll("-", " ") : ""}
           </p>

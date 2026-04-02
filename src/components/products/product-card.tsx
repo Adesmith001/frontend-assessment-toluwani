@@ -17,7 +17,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
         href={`/products/${product.id}`}
         className="surface-panel-strong flex h-full flex-col overflow-hidden rounded-[28px] transition-transform duration-300 hover:-translate-y-1 hover:border-accent/30 focus-visible:-translate-y-1 focus-visible:border-accent/40 focus-visible:outline-none"
       >
-        <div className="relative aspect-[4/3] overflow-hidden bg-[linear-gradient(135deg,_rgba(49,94,255,0.08),_rgba(255,255,255,0.6))]">
+        <div className="relative aspect-4/3 overflow-hidden bg-[linear-gradient(135deg,rgba(49,94,255,0.08),rgba(255,255,255,0.6))]">
           <ProductImage
             src={product.thumbnail}
             alt={product.title}
@@ -25,7 +25,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
             className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#172033]/28 to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-[#172033]/28 to-transparent" />
         </div>
 
         <div className="flex flex-1 flex-col gap-5 p-5">

@@ -48,7 +48,7 @@ export function Pagination({
             category,
           })}
           aria-disabled={currentPage === 1}
-          className="rounded-full border border-border px-4 py-2 text-sm font-medium text-foreground transition hover:border-accent/40 hover:text-accent aria-disabled:pointer-events-none aria-disabled:opacity-45"
+          className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-border px-4 py-2 text-sm font-medium text-foreground transition hover:border-accent/40 hover:text-accent aria-disabled:pointer-events-none aria-disabled:opacity-45"
         >
           Previous
         </Link>
@@ -61,9 +61,9 @@ export function Pagination({
               key={page}
               href={createCatalogHref({ page, q, category })}
               aria-current={isCurrentPage ? "page" : undefined}
-              className={`inline-flex h-11 min-w-11 items-center justify-center rounded-full border px-4 text-sm font-medium transition ${
+              className={`inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border px-4 text-sm font-medium leading-none transition ${
                 isCurrentPage
-                  ? "border-accent bg-accent text-accent-foreground"
+                  ? "border-accent bg-accent text-white"
                   : "border-border text-foreground hover:border-accent/40 hover:text-accent"
               }`}
             >
@@ -79,7 +79,7 @@ export function Pagination({
             category,
           })}
           aria-disabled={currentPage === totalPages}
-          className="rounded-full border border-border px-4 py-2 text-sm font-medium text-foreground transition hover:border-accent/40 hover:text-accent aria-disabled:pointer-events-none aria-disabled:opacity-45"
+          className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-border px-4 py-2 text-sm font-medium text-foreground transition hover:border-accent/40 hover:text-accent aria-disabled:pointer-events-none aria-disabled:opacity-45"
         >
           Next
         </Link>

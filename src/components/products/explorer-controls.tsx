@@ -88,6 +88,7 @@ export function ExplorerControls({
 
         <div className="flex items-center gap-3">
           <span
+            aria-live="polite"
             className={`rounded-full border px-3 py-1 font-mono text-xs transition ${
               isPending
                 ? "border-accent/30 bg-accent/10 text-accent"
