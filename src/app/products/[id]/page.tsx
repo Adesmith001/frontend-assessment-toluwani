@@ -55,10 +55,21 @@ export default async function ProductDetailPage({
   const gallery = product.images.length > 0 ? product.images : [product.thumbnail].filter(Boolean);
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
+    <div className="mx-auto w-full max-w-screen-2xl px-4 pb-14 pt-6 sm:px-6 lg:px-8 lg:pt-8">
+      <Link
+        href="/"
+        className="mb-6 inline-flex items-center gap-3 text-sm font-medium uppercase tracking-[0.18em] text-muted-foreground transition hover:text-foreground"
+      >
+        <span aria-hidden="true" className="text-lg leading-none">
+          &larr;
+        </span>
+        Back
+      </Link>
+
       <Breadcrumbs
         items={[
-          { label: "Catalog", href: "/" },
+          { label: "Home", href: "/" },
+          { label: "Products", href: "/" },
           {
             label: formatCategoryLabel(product.category),
             href: createCatalogHref({ category: product.category }),
@@ -67,115 +78,97 @@ export default async function ProductDetailPage({
         ]}
       />
 
-      <section className="grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)]">
+      <section className="grid gap-8 xl:grid-cols-[minmax(0,0.95fr)_minmax(320px,0.42fr)]">
         <div className="space-y-4">
-          <div className="surface-panel-strong relative overflow-hidden rounded-[36px] p-4">
-            <div className="relative aspect-4/3 overflow-hidden rounded-[28px] bg-[linear-gradient(135deg,rgba(49,94,255,0.08),rgba(255,255,255,0.68))]">
-              <ProductImage
-                src={product.thumbnail}
-                alt={product.title}
-                priority
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover"
-              />
-            </div>
+          <div className="relative aspect-4/5 overflow-hidden border border-border bg-[#ede7de]">
+            <ProductImage
+              src={product.thumbnail}
+              alt={product.title}
+              priority
+              sizes="(max-width: 1280px) 100vw, 60vw"
+              className="object-cover"
+            />
           </div>
 
           {gallery.length > 1 && (
-            <div className="grid gap-4 sm:grid-cols-3">
+            <div className="flex gap-3 overflow-x-auto pb-1">
               {gallery.slice(0, 3).map((image, index) => (
                 <div
                   key={`${image}-${index}`}
-                  className="surface-panel-strong relative overflow-hidden rounded-3xl p-3"
+                  className="relative h-24 w-20 shrink-0 overflow-hidden border border-border bg-[#ede7de] sm:h-28 sm:w-24"
                 >
-                  <div className="relative aspect-square overflow-hidden rounded-[18px] bg-[linear-gradient(135deg,rgba(49,94,255,0.06),rgba(255,255,255,0.7))]">
-                    <ProductImage
-                      src={image}
-                      alt={`${product.title} preview ${index + 1}`}
-                      sizes="(max-width: 768px) 33vw, 20vw"
-                      className="object-cover"
-                    />
-                  </div>
+                  <ProductImage
+                    src={image}
+                    alt={`${product.title} preview ${index + 1}`}
+                    sizes="96px"
+                    className="object-cover"
+                  />
                 </div>
               ))}
             </div>
           )}
         </div>
 
-        <div className="surface-panel-strong rounded-[36px] p-8 sm:p-10">
-          <div className="flex flex-wrap items-center gap-3">
-            <span className="eyebrow text-muted-foreground">
-              {formatCategoryLabel(product.category)}
-            </span>
-            {product.brand && (
-              <span className="rounded-full border border-border bg-background/80 px-3 py-1 font-mono text-xs text-muted-foreground">
-                {product.brand}
-              </span>
-            )}
-          </div>
-
-          <h1 className="mt-5 text-balance text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
-            {product.title}
-          </h1>
-          <p className="mt-5 text-base leading-8 text-muted-foreground sm:text-lg">
-            {product.description}
-          </p>
-
-          <div className="mt-8 grid gap-4 sm:grid-cols-2">
-            <div className="rounded-3xl border border-border bg-background/70 p-5">
-              <p className="text-sm text-muted-foreground">Price</p>
-              <p className="mt-2 text-3xl font-semibold tracking-tight text-foreground">
+        <div className="space-y-8 xl:sticky xl:top-28">
+          <div className="border-t border-border pt-5 xl:border-t-0 xl:pt-0">
+            <div className="flex items-start justify-between gap-6">
+              <div>
+                <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
+                  {formatCategoryLabel(product.category)}
+                </p>
+                <h1 className="mt-3 max-w-md text-3xl font-semibold uppercase tracking-tight text-foreground sm:text-4xl">
+                  {product.title}
+                </h1>
+              </div>
+              <p className="text-3xl font-semibold tracking-tight text-foreground">
                 {formatCurrency(product.price)}
               </p>
             </div>
-            <div className="rounded-3xl border border-border bg-background/70 p-5">
-              <p className="text-sm text-muted-foreground">Rating</p>
-              <p className="mt-2 text-3xl font-semibold tracking-tight text-foreground">
-                {formatRating(product.rating)}
-              </p>
-            </div>
-          </div>
 
-          <dl className="mt-8 grid gap-4 sm:grid-cols-2">
-            <div className="rounded-3xl border border-border bg-background/70 p-5">
-              <dt className="text-sm text-muted-foreground">Stock</dt>
-              <dd className="mt-2 text-lg font-semibold text-foreground">{product.stock}</dd>
-            </div>
-            <div className="rounded-3xl border border-border bg-background/70 p-5">
-              <dt className="text-sm text-muted-foreground">Availability</dt>
-              <dd className="mt-2 text-lg font-semibold text-foreground">
-                {product.availabilityStatus ?? "In catalog"}
-              </dd>
-            </div>
-            <div className="rounded-3xl border border-border bg-background/70 p-5">
-              <dt className="text-sm text-muted-foreground">Discount</dt>
-              <dd className="mt-2 text-lg font-semibold text-foreground">
-                {product.discountPercentage
-                  ? `${product.discountPercentage.toFixed(0)}% off`
-                  : "No active discount"}
-              </dd>
-            </div>
-            <div className="rounded-3xl border border-border bg-background/70 p-5">
-              <dt className="text-sm text-muted-foreground">Category</dt>
-              <dd className="mt-2 text-lg font-semibold text-foreground">
-                {formatCategoryLabel(product.category)}
-              </dd>
-            </div>
-          </dl>
+            <p className="mt-4 text-sm font-medium text-muted-foreground">
+              MRP incl. of all taxes
+            </p>
+            <p className="mt-6 max-w-lg text-sm leading-7 text-muted-foreground sm:text-base">
+              {product.description}
+            </p>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link
-              href="/"
-              className="rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90"
-            >
-              Back to catalog
-            </Link>
-            <Link
-              href={createCatalogHref({ category: product.category })}
-              className="rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition hover:border-accent/30 hover:text-accent"
-            >
-              See more in this category
-            </Link>
+            <dl className="mt-8 border-y border-border">
+              <div className="grid grid-cols-[120px_minmax(0,1fr)] gap-4 border-b border-border py-4 text-sm">
+                <dt className="text-muted-foreground">Brand</dt>
+                <dd className="font-medium text-foreground">
+                  {product.brand ?? "XIV QR Edition"}
+                </dd>
+              </div>
+              <div className="grid grid-cols-[120px_minmax(0,1fr)] gap-4 border-b border-border py-4 text-sm">
+                <dt className="text-muted-foreground">Rating</dt>
+                <dd className="font-medium text-foreground">{formatRating(product.rating)}</dd>
+              </div>
+              <div className="grid grid-cols-[120px_minmax(0,1fr)] gap-4 border-b border-border py-4 text-sm">
+                <dt className="text-muted-foreground">Stock</dt>
+                <dd className="font-medium text-foreground">{product.stock} available</dd>
+              </div>
+              <div className="grid grid-cols-[120px_minmax(0,1fr)] gap-4 py-4 text-sm">
+                <dt className="text-muted-foreground">Availability</dt>
+                <dd className="font-medium text-foreground">
+                  {product.availabilityStatus ?? "In catalog"}
+                </dd>
+              </div>
+            </dl>
+
+            <div className="mt-8 flex flex-col gap-3">
+              <button
+                type="button"
+                className="inline-flex min-h-13 items-center justify-center border border-foreground bg-[#ddd6cb] px-6 py-3 text-sm font-semibold uppercase tracking-[0.16em] text-foreground transition hover:bg-foreground hover:text-background"
+              >
+                Add to bag
+              </button>
+              <Link
+                href={createCatalogHref({ category: product.category })}
+                className="inline-flex min-h-13 items-center justify-center border border-border px-6 py-3 text-sm font-medium uppercase tracking-[0.14em] text-foreground transition hover:border-foreground"
+              >
+                More from {formatCategoryLabel(product.category)}
+              </Link>
+            </div>
           </div>
         </div>
       </section>

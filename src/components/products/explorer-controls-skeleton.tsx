@@ -1,17 +1,25 @@
 export function ExplorerControlsSkeleton() {
   return (
-    <section className="surface-panel rounded-[32px] p-5 sm:p-6">
-      <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-        <div className="space-y-3">
-          <div className="h-3 w-20 animate-pulse rounded-full bg-border" />
-          <div className="h-8 w-72 animate-pulse rounded-full bg-border" />
+    <section className="space-y-6">
+      <div className="h-14 animate-pulse bg-border" />
+      <div className="space-y-4 border-t border-border pt-5">
+        <div className="flex items-center justify-between gap-3">
+          <div className="h-8 w-28 animate-pulse bg-border" />
+          <div className="h-4 w-16 animate-pulse bg-border" />
         </div>
-        <div className="h-8 w-28 animate-pulse rounded-full bg-border" />
-      </div>
-      <div className="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1.4fr)_minmax(220px,0.6fr)_auto]">
-        <div className="h-14 animate-pulse rounded-[20px] bg-border" />
-        <div className="h-14 animate-pulse rounded-[20px] bg-border" />
-        <div className="h-14 animate-pulse rounded-full bg-border" />
+        <div className="flex flex-wrap gap-2">
+          {Array.from({ length: 6 }, (_, index) => (
+            <div
+              key={index}
+              className="h-10 w-24 animate-pulse border border-border bg-border/70"
+            />
+          ))}
+        </div>
+        <div className="h-12 animate-pulse bg-border" />
+        <div className="flex items-center justify-between gap-4 border-t border-dashed border-border pt-4">
+          <div className="h-8 flex-1 animate-pulse bg-border" />
+          <div className="h-10 w-24 animate-pulse border border-border bg-border/70" />
+        </div>
       </div>
     </section>
   );

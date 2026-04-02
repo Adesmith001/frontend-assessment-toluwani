@@ -31,58 +31,60 @@ export function Pagination({
   return (
     <nav
       aria-label="Pagination"
-      className="surface-panel mt-10 flex flex-col gap-5 rounded-[30px] p-5 sm:flex-row sm:items-center sm:justify-between"
+      className="mt-10 border-t border-border pt-5"
     >
-      <div>
-        <p className="eyebrow text-muted-foreground">Page navigation</p>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Page {currentPage} of {totalPages}
-        </p>
-      </div>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="eyebrow text-muted-foreground">Page navigation</p>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Page {currentPage} of {totalPages}
+          </p>
+        </div>
 
-      <div className="flex flex-wrap items-center gap-2">
-        <Link
-          href={createCatalogHref({
-            page: Math.max(1, currentPage - 1),
-            q,
-            category,
+        <div className="flex flex-wrap items-center gap-2">
+          <Link
+            href={createCatalogHref({
+              page: Math.max(1, currentPage - 1),
+              q,
+              category,
+            })}
+            aria-disabled={currentPage === 1}
+            className="inline-flex min-h-[44px] items-center justify-center border border-border px-4 py-2 text-sm font-medium text-foreground transition hover:border-foreground aria-disabled:pointer-events-none aria-disabled:opacity-45"
+          >
+            Back
+          </Link>
+
+          {pages.map((page) => {
+            const isCurrentPage = page === currentPage;
+
+            return (
+              <Link
+                key={page}
+                href={createCatalogHref({ page, q, category })}
+                aria-current={isCurrentPage ? "page" : undefined}
+                className={`inline-flex min-h-[44px] min-w-[44px] items-center justify-center border px-4 text-sm font-medium leading-none transition ${
+                  isCurrentPage
+                    ? "border-foreground bg-foreground text-background"
+                    : "border-border text-foreground hover:border-foreground"
+                }`}
+              >
+                {page}
+              </Link>
+            );
           })}
-          aria-disabled={currentPage === 1}
-          className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-border px-4 py-2 text-sm font-medium text-foreground transition hover:border-accent/40 hover:text-accent aria-disabled:pointer-events-none aria-disabled:opacity-45"
-        >
-          Previous
-        </Link>
 
-        {pages.map((page) => {
-          const isCurrentPage = page === currentPage;
-
-          return (
-            <Link
-              key={page}
-              href={createCatalogHref({ page, q, category })}
-              aria-current={isCurrentPage ? "page" : undefined}
-              className={`inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border px-4 text-sm font-medium leading-none transition ${
-                isCurrentPage
-                  ? "border-accent bg-accent text-white"
-                  : "border-border text-foreground hover:border-accent/40 hover:text-accent"
-              }`}
-            >
-              {page}
-            </Link>
-          );
-        })}
-
-        <Link
-          href={createCatalogHref({
-            page: Math.min(totalPages, currentPage + 1),
-            q,
-            category,
-          })}
-          aria-disabled={currentPage === totalPages}
-          className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-border px-4 py-2 text-sm font-medium text-foreground transition hover:border-accent/40 hover:text-accent aria-disabled:pointer-events-none aria-disabled:opacity-45"
-        >
-          Next
-        </Link>
+          <Link
+            href={createCatalogHref({
+              page: Math.min(totalPages, currentPage + 1),
+              q,
+              category,
+            })}
+            aria-disabled={currentPage === totalPages}
+            className="inline-flex min-h-[44px] items-center justify-center border border-border px-4 py-2 text-sm font-medium text-foreground transition hover:border-foreground aria-disabled:pointer-events-none aria-disabled:opacity-45"
+          >
+            Next
+          </Link>
+        </div>
       </div>
     </nav>
   );

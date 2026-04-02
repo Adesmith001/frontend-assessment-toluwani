@@ -76,50 +76,89 @@ export function ExplorerControls({
     });
   }
 
+  const quickPickCategories = categories.slice(0, 6);
+
   return (
-    <section className="surface-panel rounded-[32px] p-5 sm:p-6">
-      <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-        <div className="max-w-2xl">
-          <p className="eyebrow text-muted-foreground">Explore</p>
-          <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground">
-            Search by product name and narrow by category.
-          </h2>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <span
-            aria-live="polite"
-            className={`rounded-full border px-3 py-1 font-mono text-xs transition ${
-              isPending
-                ? "border-accent/30 bg-accent/10 text-accent"
-                : "border-border bg-background/70 text-muted-foreground"
-            }`}
+    <section className="space-y-6">
+      <label className="block space-y-2">
+        <span className="eyebrow text-muted-foreground">Search products</span>
+        <div className="flex items-center gap-3 border border-border bg-[#dfd8cf] px-4 py-3">
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            className="h-4 w-4 shrink-0 text-foreground"
           >
-            {isPending ? "Updating..." : "URL synced"}
-          </span>
-        </div>
-      </div>
-
-      <div className="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1.4fr)_minmax(220px,0.6fr)_auto]">
-        <label className="space-y-2">
-          <span className="text-sm font-medium text-foreground">Search products</span>
+            <path
+              d="m17 17 3.5 3.5M10.5 18a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15Z"
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeWidth="1.7"
+            />
+          </svg>
           <input
+            aria-label="Search products"
             type="search"
             name="q"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search for phones, skincare, shoes..."
-            className="w-full rounded-[20px] border border-border bg-background/80 px-4 py-3 text-sm text-foreground outline-none transition placeholder:text-muted-foreground focus:border-accent/40 focus:ring-4 focus:ring-accent/10"
+            placeholder="Search"
+            className="w-full bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground"
           />
-        </label>
+        </div>
+      </label>
 
-        <label className="space-y-2">
-          <span className="text-sm font-medium text-foreground">Category</span>
+      <div className="space-y-4 border-t border-border pt-5">
+        <div className="flex items-center justify-between gap-3">
+          <h2 className="text-2xl font-semibold tracking-tight text-foreground">Filters</h2>
+          <span
+            aria-live="polite"
+            className="text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground"
+          >
+            {isPending ? "Syncing" : "URL live"}
+          </span>
+        </div>
+
+        <div className="flex flex-wrap gap-2">
+          <button
+            type="button"
+            onClick={() => updateCategory("")}
+            className={`min-h-[40px] border px-3 text-[11px] font-semibold uppercase tracking-[0.12em] transition ${
+              selectedCategory
+                ? "border-border bg-surface-strong text-foreground hover:border-foreground"
+                : "border-foreground bg-foreground text-background"
+            }`}
+          >
+            All
+          </button>
+          {quickPickCategories.map((category) => {
+            const isActive = selectedCategory === category.slug;
+
+            return (
+              <button
+                key={category.slug}
+                type="button"
+                onClick={() => updateCategory(category.slug)}
+                className={`min-h-[40px] border px-3 text-[11px] font-semibold uppercase tracking-[0.12em] transition ${
+                  isActive
+                    ? "border-foreground bg-foreground text-background"
+                    : "border-border bg-surface-strong text-foreground hover:border-foreground"
+                }`}
+              >
+                {category.name}
+              </button>
+            );
+          })}
+        </div>
+
+        <label className="block space-y-2">
+          <span className="eyebrow text-muted-foreground">Category</span>
           <select
+            aria-label="Category"
             name="category"
             value={selectedCategory}
             onChange={(event) => updateCategory(event.target.value)}
-            className="w-full rounded-[20px] border border-border bg-background/80 px-4 py-3 text-sm text-foreground outline-none transition focus:border-accent/40 focus:ring-4 focus:ring-accent/10"
+            className="w-full border border-border bg-surface-strong px-4 py-3 text-sm text-foreground outline-none transition hover:border-foreground"
           >
             <option value="">All categories</option>
             {categories.map((category) => (
@@ -130,7 +169,10 @@ export function ExplorerControls({
           </select>
         </label>
 
-        <div className="flex items-end">
+        <div className="flex items-center justify-between gap-4 border-t border-dashed border-border pt-4">
+          <p className="text-xs leading-5 text-muted-foreground">
+            Search and category stay in the URL, so every filtered view is shareable.
+          </p>
           <button
             type="button"
             onClick={() => {
@@ -140,7 +182,7 @@ export function ExplorerControls({
                 router.replace(createCatalogHref({}), { scroll: false });
               });
             }}
-            className="inline-flex w-full items-center justify-center rounded-full border border-border px-5 py-3 text-sm font-medium text-foreground transition hover:border-accent/30 hover:text-accent lg:w-auto"
+            className="shrink-0 border border-border px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] transition hover:border-foreground"
           >
             Reset
           </button>

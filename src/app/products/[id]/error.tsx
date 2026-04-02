@@ -16,9 +16,9 @@ export default function ProductError({
 
   return (
     <div className="mx-auto flex min-h-[calc(100svh-6rem)] w-full max-w-4xl items-center px-4 py-10 sm:px-6 lg:px-8">
-      <section className="surface-panel-strong w-full rounded-[36px] p-8 sm:p-12">
+      <section className="w-full border border-border bg-surface-strong p-8 sm:p-12">
         <p className="eyebrow text-muted-foreground">Product unavailable</p>
-        <h1 className="mt-4 text-4xl font-semibold tracking-tight text-foreground">
+        <h1 className="mt-4 text-4xl font-semibold uppercase tracking-tight text-foreground">
           This product detail view could not be loaded.
         </h1>
         <p className="mt-4 max-w-2xl text-base leading-7 text-muted-foreground">
@@ -29,13 +29,13 @@ export default function ProductError({
           <button
             type="button"
             onClick={reset}
-            className="rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+            className="inline-flex min-h-[48px] items-center justify-center border border-foreground bg-[#ddd6cb] px-6 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-foreground transition hover:bg-foreground hover:text-background"
           >
             Try again
           </button>
           <Link
             href="/"
-            className="rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition hover:border-accent/30 hover:text-accent"
+            className="inline-flex min-h-[48px] items-center justify-center border border-border px-6 py-3 text-sm font-medium uppercase tracking-[0.12em] text-foreground transition hover:border-foreground"
           >
             Back to catalog
           </Link>

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import Link from "next/link";
 import "./globals.css";
 
 const sora = localFont({
@@ -20,12 +19,57 @@ export const metadata: Metadata = {
     process.env.NEXT_PUBLIC_SITE_URL ?? "https://checkit-content-explorer.example",
   ),
   title: {
-    default: "Checkit Content Explorer",
-    template: "%s | Checkit Content Explorer",
+    default: "XIV QR Product Explorer",
+    template: "%s | XIV QR Product Explorer",
   },
   description:
-    "A server-rendered product explorer with shareable search, category filters, and polished async states.",
+    "A server-rendered product explorer with shareable search, category filters, and a fashion-led editorial UI.",
 };
+
+function MenuIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5">
+      <path
+        d="M4 7h10M4 12h16M4 17h8"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeWidth="1.7"
+      />
+    </svg>
+  );
+}
+
+function BagIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4">
+      <path
+        d="M7 9V8a5 5 0 0 1 10 0v1M6 9h12l-1 9H7L6 9Z"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.6"
+      />
+    </svg>
+  );
+}
+
+function ProfileIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4">
+      <path
+        d="M16.5 18a4.5 4.5 0 0 0-9 0M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.6"
+      />
+    </svg>
+  );
+}
+
 
 export default function RootLayout({
   children,
@@ -42,26 +86,32 @@ export default function RootLayout({
           <a href="#content" className="skip-link">
             Skip to content
           </a>
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-80 bg-[radial-gradient(circle_at_top,_rgba(51,102,255,0.18),_transparent_55%)]" />
-          <header className="sticky top-0 z-40 border-b border-border/80 bg-background/88 backdrop-blur-xl">
-            <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-6 px-4 py-4 sm:px-6 lg:px-8">
-              <Link href="/" className="flex items-center gap-3">
-                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-accent/20 bg-accent/10 text-sm font-semibold text-accent">
-                  CE
-                </span>
-                <span>
-                  <span className="block text-sm font-medium uppercase tracking-[0.28em] text-muted-foreground">
-                    Checkit
-                  </span>
-                  <span className="block text-base font-semibold tracking-tight text-foreground">
-                    Content Explorer
-                  </span>
-                </span>
-              </Link>
+          <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur-sm">
+            <div className="mx-auto flex w-full max-w-screen-2xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
+              <button
+                type="button"
+                aria-label="Open navigation"
+                className="inline-flex h-11 w-11 items-center justify-center border border-border bg-surface-strong transition hover:border-foreground"
+              >
+                <MenuIcon />
+              </button>
 
-              <p className="hidden max-w-sm text-right text-sm leading-6 text-muted-foreground md:block">
-                Server-rendered catalog, shareable filters, and calm product UI.
-              </p>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  aria-label="Saved items"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border-2 border-foreground bg-background transition hover:bg-foreground hover:text-background"
+                >
+                  <BagIcon />
+                </button>
+                <button
+                  type="button"
+                  aria-label="Profile"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-foreground text-background transition hover:opacity-88"
+                >
+                  <ProfileIcon />
+                </button>
+              </div>
             </div>
           </header>
 

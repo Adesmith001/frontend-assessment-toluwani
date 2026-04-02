@@ -36,60 +36,61 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   const totalPages = Math.max(1, Math.ceil(productsResponse.total / PRODUCTS_PER_PAGE));
 
   return (
-    <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
-      <section className="grid gap-8 lg:grid-cols-[minmax(0,1.4fr)_minmax(300px,0.6fr)] lg:items-end">
-        <div className="space-y-4">
-          <p className="eyebrow text-muted-foreground">Assessment build</p>
-          <h1 className="max-w-4xl text-balance text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
-            Browse a polished product catalog with shareable filters and server-first
-            rendering.
-          </h1>
-          <p className="max-w-3xl text-base leading-7 text-muted-foreground sm:text-lg">
-            The explorer keeps product discovery lightweight and predictable, with URL
-            state, resilient async handling, and a clean detail route for deeper context.
-          </p>
-        </div>
-
-        <div className="surface-panel-strong rounded-4xl p-6">
-          <p className="eyebrow text-muted-foreground">Current view</p>
-          <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <p className="text-3xl font-semibold tracking-tight text-foreground">
-                {formatProductCount(productsResponse.total)}
-              </p>
-              <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                {query.category
-                  ? `Focused on ${formatCategoryLabel(query.category)}`
-                  : "All product categories"}
-                {query.q ? ` matching "${query.q}"` : ""}
+    <div className="mx-auto w-full max-w-screen-2xl px-4 pb-14 pt-6 sm:px-6 lg:px-8 lg:pt-8">
+      <section className="grid gap-10 xl:grid-cols-[280px_minmax(0,1fr)] xl:items-start">
+        <div className="space-y-8 xl:sticky xl:top-28">
+          <div className="space-y-3">
+            <p className="text-sm font-medium text-muted-foreground">Home / Products</p>
+            <div className="border-t border-border pt-5">
+              <h1 className="text-4xl font-semibold uppercase tracking-tight text-foreground sm:text-5xl">
+                Products
+              </h1>
+              <p className="mt-3 max-w-sm text-sm leading-6 text-muted-foreground">
+                A server-first product wall with shareable filters, lean interactions,
+                and a retail-inspired editorial surface.
               </p>
             </div>
-            <p className="font-mono text-xs uppercase tracking-[0.24em] text-muted-foreground">
-              {hasActiveFilters(query) ? "Filtered catalog" : "Full catalog"}
-            </p>
           </div>
+
+          <ExplorerControls
+            categories={categories}
+            initialQuery={query.q}
+            initialCategory={query.category}
+          />
+        </div>
+
+        <div className="space-y-6">
+          <div className="flex flex-col gap-3 border-b border-border pb-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="eyebrow text-muted-foreground">Current selection</p>
+              <p className="mt-2 text-base font-medium text-foreground">
+                {query.category ? formatCategoryLabel(query.category) : "All categories"}
+                {query.q ? ` / ${query.q}` : ""}
+              </p>
+            </div>
+            <div className="text-sm uppercase tracking-[0.18em] text-muted-foreground">
+              {formatProductCount(productsResponse.total)}
+              <span className="ml-3">
+                {hasActiveFilters(query) ? "Filtered view" : "Full edit"}
+              </span>
+            </div>
+          </div>
+
+          {productsResponse.products.length > 0 ? (
+            <>
+              <ProductGrid products={productsResponse.products} />
+              <Pagination
+                currentPage={query.page}
+                totalPages={totalPages}
+                q={query.q}
+                category={query.category}
+              />
+            </>
+          ) : (
+            <EmptyState q={query.q} category={query.category} />
+          )}
         </div>
       </section>
-
-      <ExplorerControls
-        categories={categories}
-        initialQuery={query.q}
-        initialCategory={query.category}
-      />
-
-      {productsResponse.products.length > 0 ? (
-        <>
-          <ProductGrid products={productsResponse.products} />
-          <Pagination
-            currentPage={query.page}
-            totalPages={totalPages}
-            q={query.q}
-            category={query.category}
-          />
-        </>
-      ) : (
-        <EmptyState q={query.q} category={query.category} />
-      )}
     </div>
   );
 }
